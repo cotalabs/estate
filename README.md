@@ -6,14 +6,14 @@ Estate (Terraform UX)
 
 > a piece of landed property or status of an owner, with respect to property, especially one of large extent with an elaborate house on it
 
-Estate is essentially at Terraform UI/UX experiance that makes Terraform easier for everyone to use.
+Estate is essentially a Terraform UI/UX experience that makes Terraform easier for everyone to use.
 
-It it designed around a some key principles:
+It is designed around some key principles:
 
 * Self-service infrastructure as code for everyone
 * Reduce the learning curve of Terraform
 * Make the right way the easy thing to do
-* Standarize usage of Terraform across an organiztion
+* Standardize usage of Terraform across an organization
 * Get out of the way of a power user limiting impact on their productivity
 * Make management of Terraform easier
 
@@ -21,12 +21,12 @@ This project was presented at [HashiConf 2017 in Austin](https://www.hashiconf.c
 
 The slides for the presentation can be found [here](http://slides.com/rocktavious/estate#/)
 
-Getting Started & Bootstraping
+Getting Started & Bootstrapping
 ------------------------------
 
 (Only for AWS Users) There is a set of Terraform files in the bootstrap folder in the root of the repository that will provision the necessary AWS resources to run Estate in a production like manner
 
-For those who arn't using AWS or have their own deployment tooling as long as it can run a docker container then you can stand this up.
+For those who aren't using AWS or have their own deployment tooling as long as it can run a docker container then you can stand this up.
 
 ```
 docker pull underarmourconnectedfitness/estate:master
@@ -40,14 +40,14 @@ docker run --privileged \
 ```
 
 The only requirements that Estate has are:
-* The `DATABASE_URL` which leverages the [Django Database URL plugin](https://github.com/kennethreitz/dj-database-url) style confirguration, so if you'd like to use MySQL you can easily
+* The `DATABASE_URL` which leverages the [Django Database URL plugin](https://github.com/kennethreitz/dj-database-url) style configuration, so if you'd like to use MySQL you can easily
 * The Django [SECRET_KEY](https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-SECRET_KEY) variable
 * The docker socket is needed because Estate runs terraform in the context of another other docker container that it spins up on demand - the docker socket requires the docker container to run in privileged mode
 
 Configuration
 -------------
 
-Estate is a Django application, this means it can have complex configuration, many plugins added to it which add additional features and configuration.  As such we've tried to keep the core configuration needed down to just environment variables.  That being said we want to make it's configuration as flexiable and pluggable as possible so we've exposed a way to plugin a normal django configuration file as well.
+Estate is a Django application; this means it can have complex configuration with many plugins added to it which add additional features and configuration. As such we've tried to keep the core configuration needed down to just environment variables. That said, we want to make its configuration as flexible and pluggable as possible, so we've exposed a way to plugin a normal django configuration file as well.
 
 The main environment variables that Estate will pickup are as follows:
 
@@ -67,7 +67,7 @@ The following can only be applied as environment variables
 * **GUNICORN_LOG_LEVEL**: See the gunicorn documenation on log levels for more information (Default: "info")
 
 
-As well you can configure a django settings file, which is just pure python, and mount it into the container
+You can also configure a django settings file, which is just pure python, and mount it into the container
 
 contents of custom.py
 ```
@@ -94,14 +94,14 @@ docker run -v ./custom.py:/usr/local/service/estate/settings/custom.py underarmo
 Running as a Cluster
 --------------------
 
-Estate by default is setup to only run as a single standalone service, but as your team grows you'll likely need to scale it horizontally.  This is quite easy with estate it just requries 1 thing - a cache database
+Estate by default is setup to only run as a single standalone service, but as your team grows you'll likely need to scale it horizontally. This is quite easy with estate it just requires 1 thing - a cache database.
 
-Estate uses a cache database to store the output of the different terraform commands run, by default it stores them on disk inside the container, but when you start to cluster Estate this won't work, so you will need to set up something like redis or memcached and configure the Django [cache framework](https://docs.djangoproject.com/en/1.11/topics/cache/) to store the cache data in the database.
+Estate uses a cache database to store the output of the different terraform commands run. By default, it stores them on disk inside the container, but when you start to cluster Estate this won't work, so you will need to set up something like redis or memcached and configure the Django [cache framework](https://docs.djangoproject.com/en/1.11/topics/cache/) to store the cache data in the database.
 
 Sentry Integration
 ------------------
 
-Sentry integration is a first class citizen integration with Estate.  There is only one variable you'll need to configure to connect to your sentry cluster
+Sentry integration is a first class citizen integration with Estate. There is only one variable you'll need to configure to connect to your sentry cluster:
 
 * **SENTRY_DSN**: You can view the sentry documentation about DSN's [here](https://docs.sentry.io/quickstart/#configure-the-dsn)
 
@@ -110,9 +110,9 @@ Developing Terraform
 
 If you wish to hack on Estate, you'll first need to understand its architecture.
 
-Estate is a single docker container that runs a [Django](https://www.djangoproject.com/) application with [Gunicorn](http://gunicorn.org/) workers.  The backend leverages [Django Rest Framework](http://www.django-rest-framework.org/) to design it REST API functionality.  The frontend is compiled by [Webpack](https://webpack.github.io/) using a standard single page app design that leverages [React](https://facebook.github.io/react/) + [Redux](http://redux.js.org/).
+Estate is a single docker container that runs a [Django](https://www.djangoproject.com/) application with [Gunicorn](http://gunicorn.org/) workers. The backend leverages [Django Rest Framework](http://www.django-rest-framework.org/) to design it REST API functionality. The frontend is compiled by [Webpack](https://webpack.github.io/) using a standard single page app design that leverages [React](https://facebook.github.io/react/) + [Redux](http://redux.js.org/).
 
-Local development has been made a breeze, and long build/compile times have been reduced as much as possible. To get started use [Git](https://git-scm.com/) to clone this repository and run `docker-compose build dev` from the root of the repository.  Once the build has completed you only need to run this command again if you change the Dockerfile itself, from here on out any changes you make to the codebase will be detected and use hot-reloading techniques to update the running application.
+Local development has been made a breeze and long build/compile times have been reduced as much as possible. To get started use [Git](https://git-scm.com/) to clone this repository and run `docker-compose build dev` from the root of the repository. Once the build has completed you only need to run this command again if you change the Dockerfile itself. From here on out, any changes you make to the codebase will be detected and use hot-reloading techniques to update the running application.
 
 To start up the application just use `docker-compose up dev` this will spin up a series of containers, as well as Estate itself, and then you can begin editing the code.
 
@@ -129,4 +129,3 @@ Contributing
 
 Features, Bug fixes, bug reports and new documentation are all appreciated!
 See the github issues page for outstanding things that could be worked on.
-
